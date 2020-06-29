@@ -1,0 +1,53 @@
+<div class="container">
+  <div id="match" class="row">
+    <div class="col s12">
+      <h4 class="section-title">Match</h4>
+    </div>
+    <div class="col s12">
+      <ul id="tabs-swipe-demo" class="tabs">
+        <li class="tab col s3"><a class="active" href="#scheduled">Scheduled</a></li>
+        <li class="tab col s3"><a href="#finished">Finished</a></li>
+      </ul>
+
+      <div id="scheduled" class="col s12">
+        <table class="responsive-table">
+          <thead>
+            <tr>
+                <th>Match</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Action</th>
+            </tr>
+          </thead>
+
+          <tbody id="scheduled-match">
+            <tr>
+              <td id="data-not-found" colspan="3" style="text-align: center;">Data Tidak Tersedia</td>
+              <td id="data-process" colspan="3" style="text-align: center; display: none;">Sedang mengambil data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="finished" class="col s12">
+        <table class="responsive-table">
+          <thead>
+            <tr>
+                <th>Match</th>
+                <th>Venue</th>
+                <th>Date</th>
+                <th>Score</th>
+            </tr>
+          </thead>
+
+          <tbody id="finished-match">
+            <tr>
+              <td id="data-not-found" colspan="3" style="text-align: center;">Data Tidak Tersedia</td>
+              <td id="data-process" colspan="3" style="text-align: center; display: none;">Sedang mengambil data...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
