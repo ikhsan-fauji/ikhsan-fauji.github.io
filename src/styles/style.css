@@ -1,0 +1,365 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+img {
+  color: #37003C;
+}
+
+nav {
+  position: fixed;
+  z-index: 1000;
+}
+nav, footer {
+  background-color: #37003C !important;
+}
+.user-view {
+  height: 100px !important;
+}
+.background {
+  padding: 20px;
+}
+.brand-logo {
+  max-width: 300px;
+  padding: 0 20px !important;
+  padding-top: 10px !important;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px 0 rgba(55, 0, 60, 0.2);
+}
+.brand-logo img {
+  width: 100%;
+}
+
+main {
+  flex: 1 0 auto;
+}
+#app {
+  padding-top: 63px;
+}
+#toast-container {
+  top: 50px;
+  left: auto !important;
+  bottom: auto !important;
+  right:0px;
+}
+
+.container {
+  width: 90% !important;
+}
+.section-title {
+  margin: 10px 0;
+  font-size: 24px;
+}
+
+.primary {
+  background-color: #37003C !important;
+  color: #ffffff;
+}
+.secondary {
+  background-color: #ffab40 !important;
+  color: #ffffff;
+}
+.text-primary {
+  color: #37003C !important;
+}
+.text-secondary {
+  color: #ffab40 !important;
+}
+.linear-primary {
+  background-image: linear-gradient(to right, rgba(55, 0, 60,1), rgba(0, 0, 0, .7)) !important;
+  color: #ffffff;
+}
+
+/* Home */
+#next-match {
+  margin: 20px  0;
+
+}
+#next-match img {
+  max-width: 90px;
+}
+#next-match .card-content {
+  padding: 0 50px !important;
+  padding-bottom: 25px !important;
+}
+#next-match .title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.left-club,
+.right-club {
+  width: 36%;
+  float: left;
+}
+.left-club img {
+  float: left;
+}
+.left-club h4 {
+  float: right;
+  text-align: left;
+  width: 72%;
+}
+.match-time {
+  text-align: center;
+  padding-top: 3%;
+  width: 28%;
+  float: left;
+  font-size: 28px;
+  font-weight: bold;
+}
+.left-club h4,
+.right-club h4 {
+  margin-top: 30px;
+}
+.right-club h4 {
+  float: left;
+  text-align: right;
+  width: 72%;
+}
+.right-club img {
+  float: right;
+}
+
+#line-up img {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+}
+
+#line-up span {
+  margin-left: 40px;
+}
+
+.match-schedule .collection-header {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 10px 15px;
+}
+.match-schedule {
+  font-size: 12px;
+}
+.match-schedule .collection-item {
+  text-align: center;
+  padding: 5px !important;
+}
+.mts-versus img {
+  width: 15px;
+  margin: 0 10px;
+}
+.mts-versus p {
+  margin: 0;
+}
+
+/* Club */
+.search-bar {
+  padding-top: 30px;
+  padding-bottom: 10px;
+  background-color: #500d56;
+  margin-bottom: 20px;
+  color: #ffab40;
+}
+.search-bar input {
+  color: #ffffff;
+  margin-top: 10px !important;
+}
+.search-bar input:focus {
+  border-bottom: 1px solid #f1961e !important;
+}
+.search-bar button {
+  background-color: #ffab40;
+  margin-top: 20px;
+}
+.search-bar button:hover {
+  background-color: #f1961e;
+}
+
+.club-detail-favorite {
+  cursor: pointer;
+}
+.card-club .card-image {
+  min-height: 160px;
+}
+.card-club .card-image img {
+  min-height: 160px;
+}
+.card-club .card-content,
+.card-club .card-action {
+  text-align: center;
+  padding: 10px;
+  background-color: #37003C !important;
+  color: #ffffff;
+}
+.card-club .card-content {
+  padding-top: 20% !important;
+  min-height: 190px;
+}
+.card-club .card-content h4 {
+  font-size: 17px;
+}
+.card-club .card-content p {
+  font-size: 13px;
+}
+.card-club .card-action a {
+  font-size: 13px;
+  position: relative;
+  top: -5px;
+  text-transform: capitalize !important;
+  margin: 0 !important;
+}
+.card-club .card-action a i {
+  position: relative;
+  top: 8px;
+  left: 5px;
+}
+.card-club .club-logo {
+  width: 50%;
+  padding: 15px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  display: block;
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  z-index: 1;
+}
+.club-logo img {
+  width: 100%;
+  height: auto;
+  max-height: 90px;
+}
+
+.club-profile {
+  margin-top: 30px !important;
+  padding: 50px 15px;
+}
+.club-profile img {
+  max-width: 180px;
+  margin: 15px;
+}
+
+.favorite-image img {
+  width: 50px;
+  height: 50px;
+  margin: 10px;
+}
+.no-favorite-clubs {
+  width: 100%;
+  text-align: center;
+  margin-top: 15%;
+}
+
+#data-process {
+  position: absolute;
+  padding-left: 42% !important;
+}
+
+#match, #saved-match, #favorite-clubs {
+  margin-top: 30px !important;
+}
+
+@media screen and (max-width: 1045px) {
+  #next-match img {
+    margin-right: 15px;
+  }
+  .left-club h4,
+  .right-club h4 {
+    width: 60%;
+    font-size: 24px;
+  }
+  .mts-versus img {
+    margin: 0 5px;
+  }
+}
+
+@media screen and (max-width: 960px) {
+  #next-match img {
+    max-width: 70px;
+  }
+
+  .card-club .card-content {
+    padding-top: 25% !important;
+  }
+}
+
+@media screen and (max-width: 790px) {
+  #app {
+    padding-top: 60px;
+  }
+  #toast-container {
+    top: auto !important;
+    left: auto !important;
+    bottom: 60px !important;
+  }
+  /* Home */
+  .left-club,
+  .right-club,
+  .match-time {
+    width: 100%;
+  }
+  .match-time {
+    margin: 30px 0;
+  }
+  .left-club h4,
+  .right-club h4 {
+    width: 80%;
+  }
+
+  /* Clubs */
+  .card-club .club-logo {
+    top: 26%;
+  }
+  .card-club .card-content {
+    padding-top: 26% !important;
+    min-height: 190px;
+  }
+}
+
+@media screen and (max-width: 516.9px) {
+  #app {
+    padding-top: 55px;
+  }
+
+  #next-match img {
+    margin-right: 0;
+  }
+
+  .left-club h4,
+  .right-club h4 {
+    width: 60%;
+  }
+
+  /* Clubs */
+  .card- .card-content {
+    padding: 0;
+  }
+  .card-club .card-content {
+    padding-top: 30% !important;
+    min-height: 165px;
+  }
+  .card-club .card-content h4 {
+    font-size: 12px;
+  }
+  .card-club .card-content p {
+    font-size: 8px;
+  }
+  .card-club .club-logo {
+    top: 22%;
+  }
+  .card-club .card-image {
+    min-height: 120px;
+  }
+  .card-club .card-image img {
+    min-height: 120px;
+  }
+  .club-logo img {
+    max-height: 60px;
+  }
+}
