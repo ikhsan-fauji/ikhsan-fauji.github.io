@@ -7,9 +7,12 @@ import { clubsScript, clubDetailScript, clubsData } from '../js/clubs.js';
 
 
 const main = async () => {
+  console.debug('=== v.93 ===')
   _initialNavigation();
-  _loadPage();
-  console.debug(window.location.href)
+
+  let page = window.location.hash.substr(1);
+  if(!page) page = 'home';
+  _loadPage(page);
 }
 
 const _initialNavigation = () => {
@@ -28,7 +31,6 @@ const _initialNavigation = () => {
 
 const _loadPage = async (page, dataId) => {
   try {
-    if(!page) page = 'home';
     const response = await fetch(`./${page}.html`);
     const template = await response.text();
 
@@ -36,7 +38,7 @@ const _loadPage = async (page, dataId) => {
 
     loadScript(page, dataId);
   } catch (error) {
-    console.debug('_loadPage', error.message)
+    // console.debug('_loadPage', error.message)
   }
 }
 
@@ -53,7 +55,7 @@ const loadScript = async (page, dataId) => {
       await homeScript();
       break;
     case 'match':
-      matchPageScript();
+      await matchPageScript();
       break;
     case 'clubs':
       await clubsScript(await clubsData(), _loadPage);
@@ -62,10 +64,10 @@ const loadScript = async (page, dataId) => {
       clubDetailScript(dataId);
       break;
     case 'favorite-clubs':
-      favoriteClubsScript(_loadPage);
+      await favoriteClubsScript(_loadPage);
       break;
     case 'saved-match':
-      savedMatchScript();
+      await savedMatchScript();
       break;
     default:
       await homeScript();

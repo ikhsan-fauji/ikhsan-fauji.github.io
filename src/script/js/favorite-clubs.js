@@ -1,10 +1,10 @@
-import { getAll, deleteById } from '../helper/idb.js';
 import request from '../helper/request.js';
 import material from '../helper/material.js';
+import club from '../data/club-data.js';
 
 const favoriteClubsScript = async (onClick) => {
   try {
-    const clubs = await getAll('favorite_clubs');
+    const clubs = await club.favorites();
     let template = '<div class="row">';
     if (clubs.length > 0) {
       clubs.forEach(club => {
@@ -62,7 +62,7 @@ const favoriteClubsScript = async (onClick) => {
 
 const deleteFavoriteClub = async (event) => {
   try {
-    await deleteById('favorite_clubs', event);
+    await club.delete(event);
     favoriteClubsScript();
     material.toast('Data berhasil dihapus');
   } catch (error) {

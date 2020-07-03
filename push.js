@@ -14,10 +14,10 @@ try {
   )
 
   const pushSubscription = {
-      "endpoint": "https://fcm.googleapis.com/fcm/send/fVQvzdpUNAI:APA91bEg46izlZqzsNlWMYH2HxRaUjyGtq2qWdeob9ISv-epuE-t8vlaZxtZQ9z--ZDB4A8wGm27a6NYp28_lojU-CBSNUo2eedeLp3neneN8OC3CmePxGjGBBlriVsmJuoT6T9DbD0N",
+      "endpoint": "https://fcm.googleapis.com/fcm/send/cbZDQDsJegc:APA91bE-NMw6wFD8Dmh_aU19ruWKiwNJzfF5ywiXkR4dIrqW4EW3WMcgeVBMl8TP4XchjxwLOmnJX2QPkpZCas6RKnLFT4WRgxgRCizKzmhKEntLzmDDD1WBtrV0yl-IHu8ER3lk0xVH",
       "keys": {
-          "p256dh": "BLLkt79z/VUFYY+FoXv5QxMbgWnRAbnffqpTqQHotAUqgXNc9tK9UF+8zdLUrjybttzDGPSvr1dBE88fArYS4LU=",
-          "auth": "BMFtTbPWFGhKX9sl+/9qXw=="
+          "p256dh": "BHKKXcPiZebQVmEoaJUOSTlsdywYg7AqmezN+zPtdMbERMbxCtIrH2aAkhVIH9OV8RomIEgLFCJGsyaGgcqENj0=",
+          "auth": "lywgD/jjAARrlMjEWCiDpg=="
       }
   };
 
@@ -33,11 +33,11 @@ try {
     payload,
     options
   ).then(res => {
-    console.debug(res)
+    // console.debug(res)
   }).catch(err => {
-    console.debug('Error: ', err.message)
+    // console.debug('Error: ', err.message)
   });
 
 } catch (error) {
-  console.debug(error.message)
+  // console.debug(error.message)
 }

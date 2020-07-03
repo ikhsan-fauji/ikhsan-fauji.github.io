@@ -4,24 +4,6 @@ var dbPromise;
 const openDb = () => {
   if (window.indexedDB) {
     dbPromise = idb.open("premiere", 1, function(upgradeDb) {
-      if (!upgradeDb.objectStoreNames.contains("next_match")) {
-        const nextMatch = upgradeDb.createObjectStore("next_match", { keyPath: 'id', autoIncrement: true });
-        nextMatch.createIndex('id', 'id', { unique: true });
-        nextMatch.createIndex('home', 'home', { unique: false });
-        nextMatch.createIndex('away', 'away', { unique: false });
-      }
-      if (!upgradeDb.objectStoreNames.contains("line_up")) {
-        const lineUp = upgradeDb.createObjectStore("line_up", { keyPath: 'id', autoIncrement: true });
-        lineUp.createIndex('id', 'id', { unique: true });
-      }
-      if (!upgradeDb.objectStoreNames.contains("scheduled_match")) {
-        const scheduledMatch = upgradeDb.createObjectStore("scheduled_match", { keyPath: 'id', autoIncrement: true });
-        scheduledMatch.createIndex('id', 'id', { unique: true });
-      }
-      if (!upgradeDb.objectStoreNames.contains("finished_match")) {
-        const finishedMatch = upgradeDb.createObjectStore("finished_match", { keyPath: 'id', autoIncrement: true });
-        finishedMatch.createIndex('id', 'id', { unique: true });
-      }
       if (!upgradeDb.objectStoreNames.contains("pined_match")) {
         const pinnedMatch = upgradeDb.createObjectStore("pined_match", { keyPath: 'id', autoIncrement: true });
         pinnedMatch.createIndex('id', 'id', { unique: true });
@@ -29,11 +11,6 @@ const openDb = () => {
       if (!upgradeDb.objectStoreNames.contains("favorite_clubs")) {
         const favoriteClub = upgradeDb.createObjectStore("favorite_clubs", { keyPath: 'id', autoIncrement: true });
         favoriteClub.createIndex('id', 'id', { unique: true });
-      }
-      if (!upgradeDb.objectStoreNames.contains("clubs")) {
-        const clubs = upgradeDb.createObjectStore("clubs", { keyPath: 'id', autoIncrement: true });
-        clubs.createIndex('id', 'id', { unique: true });
-        clubs.createIndex('name', 'name', { unique: false });
       }
     });
   }

@@ -1,10 +1,9 @@
-import app from '../utils/enums.js';
 import material from '../helper/material.js';
-import request from '../helper/request.js';
 import process from '../helper/process.js';
-import { getDate, yesterday, tomorrow, getTime } from '../helper/date.js';
-import { openDb, bulkUpsert, getByKey, getData, clearTable, getAll } from '../helper/idb.js';
-import { orderBy } from 'lodash';
+import { getDate, getTime } from '../helper/date.js';
+import { openDb, bulkUpsert } from '../helper/idb.js';
+import match from '../data/match-data.js';
+import club from '../data/club-data.js';
 
 const matchPageScript = async () => {
   try {
@@ -14,7 +13,7 @@ const matchPageScript = async () => {
     await _scheduledMatches();
     await _finishedMatches();
   } catch (error) {
-    console.debug(error.message);
+    // console.debug(error.message);
   }
 }
 
@@ -23,7 +22,7 @@ const _scheduledMatches = async () => {
     process.startProcess();
 
     const scheduledTable = document.querySelector('#scheduled-match');
-    const matches = await _scheduledMatchesData();
+    const matches = await match.scheduled();
     if (matches.length > 0) {
       let template = '';
       matches.forEach(match => {
@@ -68,49 +67,10 @@ const _scheduledMatches = async () => {
   }
 }
 
-const _scheduledMatchesData = async () => {
-  try {
-    const matches = await getData(_getScheduledMatchesFromServer, _saveScheduledMatches, 'scheduled_match');
-    return orderBy(matches, ['utcDate'], 'asc');
-  } catch (error) {
-    console.debug('Scheduled Matches: ', error.message);
-  }
-}
-
-const _getScheduledMatchesFromServer = async () => {
-  const dateFrom = getDate(yesterday(), 'YYYY-MM-DD'),
-        dateTo = getDate(tomorrow(7), 'YYYY-MM-DD');
-
-  const params = `?status=SCHEDULED&dateFrom=${ dateFrom }&dateTo=${ dateTo }`;
-  const data = await request.get(`competitions/${app.LEAGUE_CODE}/matches${ params }`);
-  return data.matches;
-}
-
-const _saveScheduledMatches = async (matches) => {
-  if (matches && matches.length > 0) {
-    const payload = [];
-    matches.forEach(match => {
-      const { utcDate ,status ,homeTeam ,awayTeam } = match;
-      payload.push({
-        id: match.id,
-        status,
-        utcDate,
-        homeTeam,
-        awayTeam
-      })
-    });
-    await clearTable('scheduled_match');
-    await bulkUpsert('scheduled_match', payload);
-  }
-}
-
 const pinMatch = async (matchId, homeId, awayId, date) => {
   try {
-    let homeTeam = await getByKey('clubs', parseInt(homeId));
-    if (!homeTeam) homeTeam = await request.get(`teams/${homeId}`);
-
-    let awayTeam = await getByKey('clubs', parseInt(awayId));
-    if (!awayTeam) awayTeam = await request.get(`teams/${awayId}`);
+    const homeTeam = await await club.getById(homeId);
+    const awayTeam = await club.getById(awayId);
 
     if (homeTeam && awayTeam) {
       const payload = [
@@ -125,10 +85,11 @@ const pinMatch = async (matchId, homeId, awayId, date) => {
       await bulkUpsert('pined_match', payload);
       material.toast('Pertandingan berhasil disimpan');
       isSaved();
+    } else {
+      material.toast('Sedang offline, tidak dapat menjangkau data');
     }
-
   } catch (error) {
-    console.debug(error.message);
+    // console.debug(error.message);
   }
 }
 
@@ -137,7 +98,7 @@ const _finishedMatches = async () => {
   try {
     process.startProcess();
 
-    const matches = await _finishedMatchesData();
+    const matches = await match.finished();
     const finishedTable = document.querySelector('#finished-match');
 
     if (matches.length > 0) {
@@ -158,45 +119,7 @@ const _finishedMatches = async () => {
     process.finishProcess();
   } catch (error) {
     process.finishProcess();
-    console.debug(error.message);
-  }
-}
-
-const _finishedMatchesData = async () => {
-  try {
-    const matches = await getData(_getFinishedMatchFromServer, _saveFinishedMatch, 'finished_match');
-    return orderBy(matches, ['utcDate'], 'desc');
-  } catch (error) {
-    console.debug('Finished Matches: ', error.message);
-  }
-}
-
-const _getFinishedMatchFromServer = async () => {
-  const dateFrom = getDate(yesterday(8), 'YYYY-MM-DD'),
-        dateTo = getDate(yesterday(), 'YYYY-MM-DD');
-
-  const params = `?status=FINISHED&dateFrom=${ dateFrom }&dateTo=${ dateTo }`;
-  const data = await request.get(`competitions/${app.LEAGUE_CODE}/matches${ params }`);
-  return data.matches;
-}
-
-const _saveFinishedMatch = async (matches) => {
-  if (matches.length > 0) {
-    const payload = [];
-    matches.forEach(match => {
-      const { utcDate ,status ,score ,homeTeam ,awayTeam } = match;
-      payload.push({
-        id: match.id,
-        status,
-        utcDate,
-        score,
-        homeTeam,
-        awayTeam
-      })
-    });
-
-    await clearTable('finished_match');
-    bulkUpsert('finished_match', payload);
+    // console.debug(error.message);
   }
 }
 
@@ -209,7 +132,7 @@ const _getScore = (score) => {
 const isSaved = async () => {
   const matches = document.querySelectorAll('.pin-match');
   await matches.forEach(async (el) => {
-    const isExist = await getByKey('pined_match', el.dataset.match)
+    const isExist = await match.pinnedByKey(el.dataset.match)
     if (isExist) {
       el.style.display = 'none';
     }

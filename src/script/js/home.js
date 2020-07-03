@@ -1,11 +1,10 @@
 import moment from 'moment';
-import lodash from 'lodash';
 import { clubLogo } from './clubs.js';
-import app from '../utils/enums.js';
 import request from '../helper/request.js';
 import process from '../helper/process.js';
-import { getDate, yesterday, tomorrow, getMiliSeconds, today } from '../helper/date.js';
-import { openDb, bulkUpsert, getData } from '../helper/idb.js';
+import { openDb } from '../helper/idb.js';
+import match from '../data/match-data.js';
+import club from '../data/club-data.js';
 
 const homeScript = async () => {
   try {
@@ -14,28 +13,28 @@ const homeScript = async () => {
     await nextMatch();
     await lineUpData();
   } catch (error) {
-    console.debug('homeScript', error.message);
+    // console.debug('homeScript', error.message);
   }
 }
 
 const nextMatch = async () => {
   try {
-    const match = await _nextMatchData();
+    const nextMatch = await _nextMatchData();
     const leftClub = document.querySelector('.left-club');
     const rightClub = document.querySelector('.right-club');
-    if (match && leftClub && rightClub) {
+    if (nextMatch && leftClub && rightClub) {
       leftClub.innerHTML = `
-        <img src="${request.url(match.homeLogo)}" alt="Team Logo">
-        <h4>${match.homeTeam}</h4>
+        <img src="${request.url(nextMatch.homeLogo)}" alt="Team Logo">
+        <h4>${nextMatch.homeTeam}</h4>
       `;
 
       rightClub.innerHTML = `
-        <h4>${match.awayTeam}</h4>
-        <img src="${request.url(match.awayLogo)}" alt="Team Logo">
+        <h4>${nextMatch.awayTeam}</h4>
+        <img src="${request.url(nextMatch.awayLogo)}" alt="Team Logo">
     `;
 
       // Count Down Match Time
-      const matchDate = moment(match.matchDate).format('DD-MM-YYYY HH:mm:ss');
+      const matchDate = moment(nextMatch.matchDate).format('DD-MM-YYYY HH:mm:ss');
       let eventTime = moment(matchDate.toString(), 'DD-MM-YYYY HH:mm:ss').unix(),
           currentTime = moment().unix(),
           diffTime = eventTime - currentTime,
@@ -78,20 +77,23 @@ const nextMatch = async () => {
       `;
     }
   } catch (error) {
-    console.debug('nextMatch', error.message)
+    // console.debug('nextMatch', error.message)
   }
 }
 
 const _nextMatchData = async () => {
   try {
-    const data = await getData(_getNextMatchFromServer, _saveNextMatch, 'next_match');
-    return data[0];
+    const data = await match.next()
+    return await _parseNextMatch(data);
   } catch (error) {
-    console.debug('Next Match Data', error.message);
+    // console.debug('Next Match Data', error.message);
+    return null;
   }
 }
 
 const _parseNextMatch = async (nextMatchData) => {
+  if (!nextMatchData) return null;
+
   const homeLogo = await clubLogo(nextMatchData.homeTeam.id);
   const awayLogo = await clubLogo(nextMatchData.awayTeam.id);
   return {
@@ -104,25 +106,10 @@ const _parseNextMatch = async (nextMatchData) => {
   }
 }
 
-const _getNextMatchFromServer = async () => {
-    const dateFrom =  getDate(today(), 'YYYY-MM-DD');
-    const dateTo =  getDate(tomorrow(), 'YYYY-MM-DD');
-    const params = `?status=SCHEDULED&dateFrom=${dateFrom}&dateTo=${dateTo}`;
-    const data = await request.get(`competitions/${app.LEAGUE_CODE}/matches${params}`);
-    const match = await _parseNextMatch(data.matches[0]);
-    return [match];
-}
-
-const _saveNextMatch = async (nextMatchData) => {
-  if (nextMatchData && nextMatchData.length > 0) {
-    bulkUpsert('next_match', nextMatchData); // not await so that return process not waiting inserting data to the local db is finished;
-  }
-}
-
 const lineUpData = async () => {
   process.startProcess();
 
-  const data = await _lineUpData();
+  const data = await club.lineUp();
   const lineUpTable = document.querySelector('#line-up');
   let template = '';
   data.forEach(line => {
@@ -142,34 +129,6 @@ const lineUpData = async () => {
   if (lineUpTable) lineUpTable.innerHTML = template;
 
   process.finishProcess();
-}
-
-const _lineUpData = async () => {
-  try {
-    const lineup = await getData(_getLineupFromServer, _saveLineUp, 'line_up');
-    return lodash.orderBy(lineup, ['position'], 'asc');
-  } catch (error) {
-    console.debug('Line up data: ', error.message);
-  }
-}
-
-const _getLineupFromServer = async () => {
-  const data = await request.get(`competitions/${app.LEAGUE_CODE}/standings`);
-  if (data) {
-    const { table } = data.standings[0];
-    return table || []
-  }
-  return []
-}
-
-const _saveLineUp = async (lineups) => {
-  const payload = [];
-  await lineups.forEach(async club => {
-    const teamData = { id: club.team.id, ...club };
-    payload.push(teamData);
-  });
-
-  bulkUpsert('line_up', payload);
 }
 
 export {

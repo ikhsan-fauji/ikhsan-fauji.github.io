@@ -1,22 +1,16 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
 workbox.precaching.precacheAndRoute([
-  { url: './', revision: '72' },
-  { url: './#home', revision: '72' },
-  { url: './#match', revision: '72' },
-  { url: './#saved-match', revision: '72' },
-  { url: './#clubs', revision: '72' },
-  { url: './#club-detail', revision: '72' },
-  { url: './#favorite-clubs', revision: '72' },
-  { url: './index.html', revision: '72' },
-  { url: './home.html', revision: '72' },
-  { url: './match.html', revision: '72' },
-  { url: './clubs.html', revision: '72' },
-  { url: './club-detail.html', revision: '72' },
-  { url: './favorite-clubs.html', revision: '72' },
-  { url: './saved-match.html', revision: '72' },
-  { url: './main.js', revision: '72' },
-  { url: './manifest.json', revision: '72' }
+  { url: './', revision: '93' },
+  { url: './index.html', revision: '93' },
+  { url: './home.html', revision: '93' },
+  { url: './match.html', revision: '93' },
+  { url: './clubs.html', revision: '93' },
+  { url: './club-detail.html', revision: '93' },
+  { url: './favorite-clubs.html', revision: '93' },
+  { url: './saved-match.html', revision: '93' },
+  { url: './main.js', revision: '93' },
+  { url: './manifest.json', revision: '93' }
 ]);
 
 workbox.routing.registerRoute(
@@ -25,9 +19,21 @@ workbox.routing.registerRoute(
 );
 
 workbox.routing.registerRoute(
-  /\.(?:png|jpg|jpeg|svg)$/,
+  new RegExp('/images/'),
   workbox.strategies.cacheFirst({
-      cacheName: 'image-icons',
+      cacheName: 'images',
+      plugins: [
+        new workbox.expiration.Plugin({
+          maxAgeSeconds: 30 * 24 * 60 * 60
+        })
+      ]
+  })
+);
+
+workbox.routing.registerRoute(
+  new RegExp('/icons/'),
+  workbox.strategies.cacheFirst({
+      cacheName: 'icons',
       plugins: [
         new workbox.expiration.Plugin({
           maxAgeSeconds: 30 * 24 * 60 * 60
@@ -45,8 +51,15 @@ workbox.routing.registerRoute(
 
 workbox.routing.registerRoute(
   /^https:\/\/api\.football-data\.org/,
-  workbox.strategies.staleWhileRevalidate({
+  workbox.strategies.networkFirst({
     cacheName: 'football-data'
+  })
+);
+
+workbox.routing.registerRoute(
+  /^https:\/\/upload\.wikimedia\.org/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'club-logo'
   })
 );
 

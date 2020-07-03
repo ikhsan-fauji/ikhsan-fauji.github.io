@@ -260,6 +260,10 @@ main {
   position: absolute;
   padding-left: 42% !important;
 }
+#ofline-mode {
+  text-align: center;
+  margin-top: 20%;
+}
 
 #match, #saved-match, #favorite-clubs {
   margin-top: 30px !important;

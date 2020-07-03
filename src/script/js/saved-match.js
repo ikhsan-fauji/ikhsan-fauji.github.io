@@ -1,13 +1,14 @@
 import process from '../helper/process.js';
-import { openDb, getAll, deleteById } from '../helper/idb.js';
+import { openDb } from '../helper/idb.js';
 import material from '../helper/material.js';
+import match from '../data/match-data.js';
 
 const savedMatchScript = async (M) => {
   try {
     openDb();
     await pinedMatches();
   } catch (error) {
-    console.debug(error.message);
+    // console.debug(error.message);
   }
 }
 
@@ -15,7 +16,7 @@ const pinedMatches = async () => {
   try {
     process.startProcess();
 
-    const matches = await getAll('pined_match');
+    const matches = await match.pinned();
     let template = '';
     if (matches.length > 0) {
       matches.forEach(match => {
@@ -55,17 +56,17 @@ const pinedMatches = async () => {
     process.finishProcess();
   } catch (error) {
     process.finishProcess();
-    console.debug('Pinned Matches: ', error.message)
+    // console.debug('Pinned Matches: ', error.message)
   }
 }
 
 const deletePinnedMatch = async (event) => {
   try {
-    await deleteById('pined_match', event);
+    await match.delete(event);
     pinedMatches();
     material.toast('Data berhasil dihapus')
   } catch (error) {
-    console.debug('Delete Match: ', error.message);
+    // console.debug('Delete Match: ', error.message);
   }
 }
 
