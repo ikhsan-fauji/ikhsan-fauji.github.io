@@ -1,20 +1,10 @@
-import process from '../helper/process.js';
 import { openDb } from '../helper/idb.js';
 import material from '../helper/material.js';
 import match from '../data/match-data.js';
 
-const savedMatchScript = async (M) => {
+const savedMatchScript = async () => {
   try {
     openDb();
-    await pinedMatches();
-  } catch (error) {
-    // console.debug(error.message);
-  }
-}
-
-const pinedMatches = async () => {
-  try {
-    process.startProcess();
 
     const matches = await match.pinned();
     let template = '';
@@ -38,14 +28,12 @@ const pinedMatches = async () => {
         </tr>
         `;
       })
-    } else {
-      template += `
-      <tr>
-        <td id="data-not-found" colspan="4" style="text-align: center;">Belum ada jadwal pertandingan yang disimpan.</td>
-      </tr>
-      `;
     }
-    document.querySelector('#saved-match-list').innerHTML = template
+
+    const matchTable = document.createElement('match-table');
+    matchTable.data = template;
+    material.closePreLoader();
+    document.querySelector('#saved').appendChild(matchTable);
     document.querySelectorAll('.delete-pinned-match').forEach(btn => {
       btn.addEventListener('click', () => {
         deletePinnedMatch(btn.dataset.matchid)
@@ -53,17 +41,15 @@ const pinedMatches = async () => {
     })
 
     material.initializeTooltip();
-    process.finishProcess();
   } catch (error) {
-    process.finishProcess();
-    // console.debug('Pinned Matches: ', error.message)
+    // console.debug(error.message);
   }
 }
 
 const deletePinnedMatch = async (event) => {
   try {
     await match.delete(event);
-    pinedMatches();
+    savedMatchScript();
     material.toast('Data berhasil dihapus')
   } catch (error) {
     // console.debug('Delete Match: ', error.message);

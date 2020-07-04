@@ -1,11 +1,11 @@
-import request from '../helper/request.js'
+import parseUrl from '../helper/parseUrl.js';
 
 class ClubCard extends HTMLElement {
   constructor () {
     super();
   }
 
-  set club (club) {
+  set club (club = null) {
     this._club = club;
     this.render();
   }
@@ -21,7 +21,7 @@ class ClubCard extends HTMLElement {
             </div>
             <div class="card-content">
               <div class="club-logo">
-                <img src="${request.url(club.crestUrl)}" alt="Club Logo">
+                <img src="${parseUrl(club.crestUrl)}" alt="Club Logo">
               </div>
               <h4>${club.name || '-'}</h4>
               <p>${club.venue || '-'}</p>
@@ -43,7 +43,7 @@ class ClubCard extends HTMLElement {
             </div>
             <div class="card-content">
               <div class="club-logo">
-              <img src="${request.url(null)}" alt="Club Logo">
+              <img src="${parseUrl(null)}" alt="Club Logo">
               </div>
               <h4>Club Name</h4>
               <p>Club Stadion</p>

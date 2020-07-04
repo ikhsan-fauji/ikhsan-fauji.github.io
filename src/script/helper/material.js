@@ -1,13 +1,21 @@
 import M from 'materialize-css';
 
 const material = {
-  initializeSideNav: () => {
+  initializeSideNav: (callback) => {
     const elems = document.querySelectorAll('.sidenav');
     M.Sidenav.init(elems);
-  },
-  closeSideNav: () => {
-    const sidenav = document.querySelector(".sidenav");
-    M.Sidenav.getInstance(sidenav).close();
+
+    let page = '';
+    const links = document.querySelectorAll(".sidenav a, .topnav a");
+    links.forEach(function (elm) {
+      elm.addEventListener("click", function(event) {
+        const sidenav = document.querySelector(".sidenav");
+        M.Sidenav.getInstance(sidenav).close();
+
+        page = event.target.getAttribute("href").substr(1);
+        callback(page)
+      });
+    });
   },
   initializeTabs: () => {
     const element = document.querySelector('.tabs')
@@ -22,7 +30,7 @@ const material = {
   },
   preLoader: () => {
     return `
-    <div class="preloader-wrapper big active">
+    <div id="pre-loader" class="preloader-wrapper big active">
       <div class="spinner-layer spinner-blue-only">
         <div class="circle-clipper left">
           <div class="circle"></div>
@@ -34,6 +42,12 @@ const material = {
       </div>
     </div>
     `;
+  },
+  closePreLoader () {
+    const preLoaders = document.querySelectorAll('#pre-loader');
+    preLoaders.forEach(loader => {
+      loader.style.display = 'none'
+    })
   }
 }
 

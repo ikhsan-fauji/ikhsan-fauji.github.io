@@ -3,30 +3,17 @@ import { homeScript } from '../js/home.js';
 import { matchPageScript } from '../js/match.js';
 import { favoriteClubsScript } from '../js/favorite-clubs.js';
 import { savedMatchScript } from '../js/saved-match.js';
-import { clubsScript, clubDetailScript, clubsData } from '../js/clubs.js';
+import { clubsScript, clubsData } from '../js/clubs.js';
+import { clubDetailScript } from '../js/club-detail.js';
 
 
 const main = async () => {
-  console.debug('=== v.93 ===')
-  _initialNavigation();
+  console.debug('=== v.100 ===')
+  material.initializeSideNav(_loadPage);
 
   let page = window.location.hash.substr(1);
   if(!page) page = 'home';
   _loadPage(page);
-}
-
-const _initialNavigation = () => {
-  material.initializeSideNav();
-
-  let page = '';
-  const links = document.querySelectorAll(".sidenav a, .topnav a");
-  links.forEach(function(elm) {
-    elm.addEventListener("click", function(event) {
-      material.closeSideNav();
-      page = event.target.getAttribute("href").substr(1);
-      _loadPage(page)
-    });
-  });
 }
 
 const _loadPage = async (page, dataId) => {

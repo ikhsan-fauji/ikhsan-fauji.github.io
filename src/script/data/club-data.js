@@ -53,7 +53,7 @@ const club = {
     try {
       await bulkUpsert('favorite_clubs', payload)
     } catch (error) {
-      // return null
+      // console.debug(error.message)
     }
   },
 
@@ -61,7 +61,7 @@ const club = {
     try {
       await deleteById('favorite_clubs', key)
     } catch (error) {
-      // return null
+      // console.debug(error.message)
     }
   }
 }

@@ -14,10 +14,10 @@ try {
   )
 
   const pushSubscription = {
-      "endpoint": "https://fcm.googleapis.com/fcm/send/cbZDQDsJegc:APA91bE-NMw6wFD8Dmh_aU19ruWKiwNJzfF5ywiXkR4dIrqW4EW3WMcgeVBMl8TP4XchjxwLOmnJX2QPkpZCas6RKnLFT4WRgxgRCizKzmhKEntLzmDDD1WBtrV0yl-IHu8ER3lk0xVH",
+      "endpoint": "https://fcm.googleapis.com/fcm/send/f6Av6Ux3w9g:APA91bH0VzolYl61HLrLzskOEBSeb_KJEuD7nyLbBeJM7CZIFPEn4sRnWdfsm75Ug5glcZV5sPbrtNUOcxbgpcsYsSe21wS-l_M5aTGFmTkZPO8wBZsTU6D0ZvQDfUeiMDFI0VO9_4wG",
       "keys": {
-          "p256dh": "BHKKXcPiZebQVmEoaJUOSTlsdywYg7AqmezN+zPtdMbERMbxCtIrH2aAkhVIH9OV8RomIEgLFCJGsyaGgcqENj0=",
-          "auth": "lywgD/jjAARrlMjEWCiDpg=="
+          "p256dh": "BHI5GnIO4l6F3lKM6fttBb8QDQk8UbXITlZXZNgZYhzjBkjeabUw7mokUnSRADt7J3moiRG6p+YoT9bw/JU1lLo=",
+          "auth": "VCKq6yvrbS5+uT/AgbTK5Q=="
       }
   };
 

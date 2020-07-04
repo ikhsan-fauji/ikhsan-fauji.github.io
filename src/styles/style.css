@@ -50,6 +50,10 @@ main {
   bottom: auto !important;
   right:0px;
 }
+#pre-loader {
+  margin-top: 15%;
+  margin-left: 45%;
+}
 
 .container {
   width: 90% !important;

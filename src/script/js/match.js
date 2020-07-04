@@ -1,9 +1,8 @@
+import '../component/MatchTable.js';
 import material from '../helper/material.js';
-import process from '../helper/process.js';
 import { getDate, getTime } from '../helper/date.js';
 import { openDb, bulkUpsert } from '../helper/idb.js';
 import match from '../data/match-data.js';
-import club from '../data/club-data.js';
 
 const matchPageScript = async () => {
   try {
@@ -17,14 +16,19 @@ const matchPageScript = async () => {
   }
 }
 
+const _matchTable = (content, finished = false) => {
+  const matchTable = document.createElement('match-table');
+  matchTable.finished = finished;
+  matchTable.data = content;
+  return matchTable;
+}
+
 const _scheduledMatches = async () => {
   try {
-    process.startProcess();
-
-    const scheduledTable = document.querySelector('#scheduled-match');
+    const scheduledElement = document.querySelector('#scheduled');
     const matches = await match.scheduled();
+    let template = '';
     if (matches.length > 0) {
-      let template = '';
       matches.forEach(match => {
         template += `
         <tr>
@@ -37,8 +41,8 @@ const _scheduledMatches = async () => {
               data-position="bottom"
               data-tooltip="Save Match"
               data-match="${match.id}"
-              data-hometeam="${match.homeTeam.id}"
-              data-awayteam="${match.awayTeam.id}"
+              data-hometeam="${match.homeTeam.name}"
+              data-awayteam="${match.awayTeam.name}"
               data-date="${match.utcDate}"
             >
               <i class="material-icons left">bookmark</i>
@@ -47,37 +51,35 @@ const _scheduledMatches = async () => {
         </tr>
         `;
       });
+    }
 
-      scheduledTable.innerHTML = template;
-
-      document.querySelectorAll('.pin-match').forEach(pin => {
+    material.closePreLoader();
+    scheduledElement.appendChild(_matchTable(template));
+    const pinBtns = document.querySelectorAll('.pin-match');
+    if (pinBtns) {
+      pinBtns.forEach(pin => {
         pin.addEventListener('click', () => {
           const { match, hometeam, awayteam, date } = pin.dataset
           pinMatch(match, hometeam, awayteam, date);
         })
       })
+      material.initializeTooltip();
     }
 
-    material.initializeTooltip();
-    process.finishProcess();
     await isSaved();
   } catch (error) {
-    process.finishProcess();
     console.debug(error.message);
   }
 }
 
-const pinMatch = async (matchId, homeId, awayId, date) => {
+const pinMatch = async (matchId, homeTeam, awayTeam, date) => {
   try {
-    const homeTeam = await await club.getById(homeId);
-    const awayTeam = await club.getById(awayId);
-
     if (homeTeam && awayTeam) {
       const payload = [
         {
           id: matchId,
-          homeTeam: homeTeam.name,
-          awayTeam: awayTeam.name,
+          homeTeam,
+          awayTeam,
           matchDate: getDate(date),
           matchTime: getTime(date)
         }
@@ -86,7 +88,7 @@ const pinMatch = async (matchId, homeId, awayId, date) => {
       material.toast('Pertandingan berhasil disimpan');
       isSaved();
     } else {
-      material.toast('Sedang offline, tidak dapat menjangkau data');
+      material.toast('Tidak dapat menyimpan data');
     }
   } catch (error) {
     // console.debug(error.message);
@@ -96,13 +98,11 @@ const pinMatch = async (matchId, homeId, awayId, date) => {
 /* Finished Matches */
 const _finishedMatches = async () => {
   try {
-    process.startProcess();
-
     const matches = await match.finished();
-    const finishedTable = document.querySelector('#finished-match');
+    const finishedElement = document.querySelector('#finished');
 
+    let template = '';
     if (matches.length > 0) {
-      let template = '';
       matches.forEach(match => {
         template += `
         <tr>
@@ -113,12 +113,12 @@ const _finishedMatches = async () => {
         </tr>
         `;
       });
-      finishedTable.innerHTML = template;
     }
 
-    process.finishProcess();
+    material.closePreLoader();
+    finishedElement.appendChild(_matchTable(template, true));
+
   } catch (error) {
-    process.finishProcess();
     // console.debug(error.message);
   }
 }

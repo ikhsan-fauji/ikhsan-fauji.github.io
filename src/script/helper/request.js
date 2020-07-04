@@ -10,10 +10,6 @@ const request = {
     } catch (error) {
       return null;
     }
-  },
-  url: (url) => {
-    if (!url) return './images/team_logo.svg';
-    return url.replace(/^http:\/\//i, 'https://');
   }
 }
 

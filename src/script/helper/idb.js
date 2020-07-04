@@ -98,42 +98,11 @@ const deleteById = async (storeName, id) => {
   }
 }
 
-const getData = async (fetchFromServer, saveData, storeName) => {
-  if (!fetchFromServer) throw Error('Please provide fetch callbak');
-  if (!saveData) throw Error('Please provide save callbak');
-  _checkStoreName(storeName);
-
-  if (!window.indexedDB) return await fetchFromServer();
-
-  let localData = await getAll(storeName);
-  // if the store is empty
-  if (localData.length === 0) {
-    const data = await fetchFromServer();
-    saveData(data);
-    return data;
-  } else {
-    const updated = await _updatedData(fetchFromServer, saveData);
-    if (updated) localData = updated
-  }
-  return localData;
-}
-
-const _updatedData = async (fetchFromServer, saveData) => {
-  const modulo2 = new Date().getMinutes() % 2;
-  // update every 2 minutes
-  if (navigator.onLine && modulo2 === 0) {
-    const data = await fetchFromServer();
-    saveData(data);
-    return data;
-  }
-}
-
 export {
   openDb,
   clearTable,
   bulkUpsert,
   getAll,
   getByKey,
-  deleteById,
-  getData
+  deleteById
 }

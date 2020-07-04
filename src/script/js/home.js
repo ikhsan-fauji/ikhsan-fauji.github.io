@@ -1,38 +1,33 @@
+import '../component/NextMatch.js';
+import '../component/LineUp.js';
 import moment from 'moment';
 import { clubLogo } from './clubs.js';
-import request from '../helper/request.js';
-import process from '../helper/process.js';
 import { openDb } from '../helper/idb.js';
 import match from '../data/match-data.js';
 import club from '../data/club-data.js';
+import material from '../helper/material.js';
 
 const homeScript = async () => {
-  try {
-    openDb();
+  openDb();
 
-    await nextMatch();
-    await lineUpData();
-  } catch (error) {
-    // console.debug('homeScript', error.message);
-  }
+  await nextMatch();
+}
+
+const _homeContent = (child) => {
+  const content = document.querySelector('#content');
+  content.appendChild(child);
 }
 
 const nextMatch = async () => {
   try {
     const nextMatch = await _nextMatchData();
-    const leftClub = document.querySelector('.left-club');
-    const rightClub = document.querySelector('.right-club');
-    if (nextMatch && leftClub && rightClub) {
-      leftClub.innerHTML = `
-        <img src="${request.url(nextMatch.homeLogo)}" alt="Team Logo">
-        <h4>${nextMatch.homeTeam}</h4>
-      `;
+    const nextMatchElement = document.createElement('next-match');
+    nextMatchElement.nextMatch = nextMatch;
+    material.closePreLoader();
+    _homeContent(nextMatchElement);
+    await lineUpData();
 
-      rightClub.innerHTML = `
-        <h4>${nextMatch.awayTeam}</h4>
-        <img src="${request.url(nextMatch.awayLogo)}" alt="Team Logo">
-    `;
-
+    if (nextMatch) {
       // Count Down Match Time
       const matchDate = moment(nextMatch.matchDate).format('DD-MM-YYYY HH:mm:ss');
       let eventTime = moment(matchDate.toString(), 'DD-MM-YYYY HH:mm:ss').unix(),
@@ -107,28 +102,10 @@ const _parseNextMatch = async (nextMatchData) => {
 }
 
 const lineUpData = async () => {
-  process.startProcess();
-
   const data = await club.lineUp();
-  const lineUpTable = document.querySelector('#line-up');
-  let template = '';
-  data.forEach(line => {
-    template += `
-    <tr>
-      <td>${line.position}</td>
-      <td><img src="${request.url(line.team.crestUrl)}" alt="Logo"><span>${line.team.name}</span></td>
-      <td>${line.playedGames}</td>
-      <td>${line.won}</td>
-      <td>${line.draw}</td>
-      <td>${line.lost}</td>
-      <td>${line.points}+</td>
-    </tr>
-    `;
-  });
-
-  if (lineUpTable) lineUpTable.innerHTML = template;
-
-  process.finishProcess();
+  const lineUpTable = document.createElement('line-up');
+  lineUpTable.lineUp = data;
+  _homeContent(lineUpTable);
 }
 
 export {
