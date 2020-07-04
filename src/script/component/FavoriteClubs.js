@@ -26,7 +26,7 @@ class FavoriteClubs extends HTMLElement {
         <div class="col s12 m12 l6">
           <div class="card horizontal">
             <div class="card-image favorite-image">
-              <img src="${parseUrl(club.clubLogo)}" alt="${club.clubName}">
+              <img src="${parseUrl(club.clubLogo)}" loading="lazy" alt="${club.clubName}">
             </div>
             <div class="card-stacked">
               <div class="card-content">

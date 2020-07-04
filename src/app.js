@@ -52,6 +52,7 @@ function requestPermission () {
 function pushManager () {
   if (('PushManager' in window)) {
     navigator.serviceWorker.getRegistration().then(function (registration) {
+      if (registration) {
         registration.pushManager.subscribe({
             userVisibleOnly: true,
             applicationServerKey: urlBase64ToUint8Array(app.PUBLIC_KEY)
@@ -76,6 +77,7 @@ function pushManager () {
         }).catch(function(e) {
             console.error('Tidak dapat melakukan subscribe ', e.message);
         });
+      }
     });
   }
 }
@@ -92,4 +94,8 @@ function urlBase64ToUint8Array(base64String) {
   }
 
   return outputArray;
+}
+
+window.onerror = () => {
+  return true;
 }

@@ -1,5 +1,3 @@
-import moment from 'moment';
-
 const getDate = (value, format = 'DD MMMM YYYY') => {
   if (!value) return '-';
   return moment(value).format(format);

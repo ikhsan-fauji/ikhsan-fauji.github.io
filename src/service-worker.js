@@ -1,16 +1,16 @@
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
 workbox.precaching.precacheAndRoute([
-  { url: './', revision: '100' },
-  { url: './index.html', revision: '100' },
-  { url: './home.html', revision: '100' },
-  { url: './match.html', revision: '100' },
-  { url: './clubs.html', revision: '100' },
-  { url: './club-detail.html', revision: '100' },
-  { url: './favorite-clubs.html', revision: '100' },
-  { url: './saved-match.html', revision: '100' },
-  { url: './main.js', revision: '100' },
-  { url: './manifest.json', revision: '100' }
+  { url: './', revision: '111' },
+  { url: './index.html', revision: '111' },
+  { url: './home.html', revision: '111' },
+  { url: './match.html', revision: '111' },
+  { url: './clubs.html', revision: '111' },
+  { url: './club-detail.html', revision: '111' },
+  { url: './favorite-clubs.html', revision: '111' },
+  { url: './saved-match.html', revision: '111' },
+  { url: './main.js', revision: '111' },
+  { url: './manifest.json', revision: '111' }
 ]);
 
 workbox.routing.registerRoute(
@@ -53,6 +53,13 @@ workbox.routing.registerRoute(
   /^https:\/\/api\.football-data\.org/,
   workbox.strategies.cacheFirst({
     cacheName: 'football-data'
+  })
+);
+
+workbox.routing.registerRoute(
+  /^https:\/\/momentjs\.com/,
+  workbox.strategies.cacheFirst({
+    cacheName: 'moment'
   })
 );
 

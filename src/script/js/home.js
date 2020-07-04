@@ -1,6 +1,5 @@
 import '../component/NextMatch.js';
 import '../component/LineUp.js';
-import moment from 'moment';
 import { clubLogo } from './clubs.js';
 import { openDb } from '../helper/idb.js';
 import match from '../data/match-data.js';

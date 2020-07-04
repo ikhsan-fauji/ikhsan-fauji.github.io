@@ -1,5 +1,6 @@
 import app from '../utils/enums.js';
 
+
 const request = {
   get: async (url) => {
     try {
@@ -8,7 +9,7 @@ const request = {
       });
       return response.json();
     } catch (error) {
-      return null;
+      // console.debug(error.message);
     }
   }
 }

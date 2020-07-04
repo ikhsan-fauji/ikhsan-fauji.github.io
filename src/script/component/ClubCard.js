@@ -21,7 +21,7 @@ class ClubCard extends HTMLElement {
             </div>
             <div class="card-content">
               <div class="club-logo">
-                <img src="${parseUrl(club.crestUrl)}" alt="Club Logo">
+                <img src="${parseUrl(club.crestUrl)}" loading="lazy" alt="Club Logo">
               </div>
               <h4>${club.name || '-'}</h4>
               <p>${club.venue || '-'}</p>

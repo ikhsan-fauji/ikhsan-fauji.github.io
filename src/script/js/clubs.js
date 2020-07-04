@@ -69,6 +69,21 @@ const saveFavorite = async (clubId) => {
 }
 
 const searchClub = async (value, onClick) => {
+  const clubs = document.querySelector('#clubs');
+  clubs.innerHTML = `
+  <div id="pre-loader" class="preloader-wrapper big active">
+    <div class="spinner-layer spinner-blue-only">
+      <div class="circle-clipper left">
+        <div class="circle"></div>
+      </div><div class="gap-patch">
+        <div class="circle"></div>
+      </div><div class="circle-clipper right">
+        <div class="circle"></div>
+      </div>
+    </div>
+  </div>
+  `;
+
   const clubData = await clubsData();
   if (value) {
     const club = clubData.filter(club => club.name.includes(value));

@@ -26,7 +26,7 @@ const favoriteClubsScript = async (onClick) => {
       })
     }
   } catch (error) {
-    console.debug('Favorite Clubs: ', error.message)
+    // console.debug('Favorite Clubs: ', error.message)
   }
 }
 
@@ -36,7 +36,7 @@ const deleteFavoriteClub = async (event) => {
     favoriteClubsScript();
     material.toast('Data berhasil dihapus');
   } catch (error) {
-    console.debug('Delete Club: ', error.message);
+    // console.debug('Delete Club: ', error.message);
   }
 }
 

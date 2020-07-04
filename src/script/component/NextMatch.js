@@ -14,7 +14,7 @@ class NextMatch extends HTMLElement {
     if (this._nextMatch) {
       return `
       <div class="left-club">
-        <img src="${parseUrl(this._nextMatch.homeLogo)}" alt="Team Logo">
+        <img src="${parseUrl(this._nextMatch.homeLogo)}" loading="lazy" alt="Team Logo">
         <h4>${this._nextMatch.homeTeam}</h4>
       </div>
 

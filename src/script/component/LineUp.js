@@ -11,13 +11,13 @@ class LineUp extends HTMLElement {
   }
 
   lineUpContent () {
-    if (this._lineUp) {
+    if (this._lineUp && this._lineUp.length > 0) {
       let template = '';
       this._lineUp.forEach(line => {
         template += `
         <tr>
           <td>${line.position}</td>
-          <td><img src="${parseUrl(line.team.crestUrl)}" alt="Logo"><span>${line.team.name}</span></td>
+          <td><img src="${parseUrl(line.team.crestUrl)}" loading="lazy" alt="Logo"><span>${line.team.name}</span></td>
           <td>${line.playedGames}</td>
           <td>${line.won}</td>
           <td>${line.draw}</td>
