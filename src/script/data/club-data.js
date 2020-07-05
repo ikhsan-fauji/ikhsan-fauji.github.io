@@ -27,6 +27,7 @@ const club = {
 
   getById: async (teamId) => {
     try {
+      if (!teamId) throw Error('Please provide teamId');
       return await request.get(`teams/${teamId}`);
     } catch (error) {
       return null

@@ -1,5 +1,5 @@
 import app from '../utils/enums.js';
-import { getDate, tomorrow, yesterday, today } from "../helper/date";
+import { getDate, tomorrow, yesterday, today } from "../helper/date.js";
 import request from "../helper/request";
 import { getByKey, getAll, deleteById } from '../helper/idb.js';
 
@@ -25,6 +25,7 @@ const match = {
       const data = await request.get(`competitions/${app.LEAGUE_CODE}/matches${ params }`);
       return data.matches ? data.matches : [];
     } catch (error) {
+      console.debug(error.message);
       return []
     }
   },

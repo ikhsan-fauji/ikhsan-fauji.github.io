@@ -108,6 +108,5 @@ const lineUpData = async () => {
 }
 
 export {
-  homeScript,
-  nextMatch
+  homeScript
 }

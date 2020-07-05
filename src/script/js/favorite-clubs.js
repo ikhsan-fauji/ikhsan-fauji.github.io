@@ -8,7 +8,9 @@ const favoriteClubsScript = async (onClick) => {
     const favoriteElement = document.createElement('favorite-clubs');
     favoriteElement.clubs = clubs;
     material.closePreLoader();
-    document.querySelector('#favorite-list').appendChild(favoriteElement);
+    const list = document.querySelector('#favorite-list');
+    list.innerHTML = "";
+    list.appendChild(favoriteElement);
 
     const deleteBtns = document.querySelectorAll('.delete-favorite-club');
     const detailBtns = document.querySelectorAll('.club-detail-link');

@@ -8,7 +8,7 @@ import { clubDetailScript } from '../js/club-detail.js';
 
 
 const main = async () => {
-  console.debug('=== v.111 ===')
+  console.debug('=== v.145 ===')
   material.initializeSideNav(_loadPage);
 
   let page = window.location.hash.substr(1);

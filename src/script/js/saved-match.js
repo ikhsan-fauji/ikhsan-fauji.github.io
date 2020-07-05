@@ -33,7 +33,10 @@ const savedMatchScript = async () => {
     const matchTable = document.createElement('match-table');
     matchTable.data = template;
     material.closePreLoader();
-    document.querySelector('#saved').appendChild(matchTable);
+
+    const saved = document.querySelector('#saved');
+    saved.innerHTML = "";
+    saved.appendChild(matchTable);
     document.querySelectorAll('.delete-pinned-match').forEach(btn => {
       btn.addEventListener('click', () => {
         deletePinnedMatch(btn.dataset.matchid)
