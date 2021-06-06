@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.7b82d294.chunk.css",
+    "main.css": "/static/css/main.c210d40f.chunk.css",
     "main.js": "/static/js/main.c297cb4a.chunk.js",
     "main.js.map": "/static/js/main.c297cb4a.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.8df4fcb0.js",
@@ -12,7 +12,7 @@
     "index.html": "/index.html",
     "service-worker.js": "/service-worker.js",
     "service-worker.js.map": "/service-worker.js.map",
-    "static/css/main.7b82d294.chunk.css.map": "/static/css/main.7b82d294.chunk.css.map",
+    "static/css/main.c210d40f.chunk.css.map": "/static/css/main.c210d40f.chunk.css.map",
     "static/js/2.71c407c6.chunk.js.LICENSE.txt": "/static/js/2.71c407c6.chunk.js.LICENSE.txt",
     "static/media/analytical_icn.c1acfe46.svg": "/static/media/analytical_icn.c1acfe46.svg",
     "static/media/back_end_icn.417c146a.svg": "/static/media/back_end_icn.417c146a.svg",
@@ -34,7 +34,7 @@
   "entrypoints": [
     "static/js/runtime-main.8df4fcb0.js",
     "static/js/2.71c407c6.chunk.js",
-    "static/css/main.7b82d294.chunk.css",
+    "static/css/main.c210d40f.chunk.css",
     "static/js/main.c297cb4a.chunk.js"
   ]
 }
